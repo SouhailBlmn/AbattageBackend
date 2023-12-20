@@ -4,7 +4,7 @@ namespace Abattage_BackEnd.Models
     {
         public int Id { get; set; }
         public string Designation { get; set; }
-        public ICollection<ArticleBetail> Articles { get; set; }
+        public ICollection<ArticleBetail>? Articles { get; set; }
     }
 
 }
