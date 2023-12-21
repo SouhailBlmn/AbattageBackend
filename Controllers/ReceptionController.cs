@@ -74,14 +74,54 @@ namespace MyApp.Namespace
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Reception reception)
+        public async Task<ActionResult<Reception>> Put(int id, [FromBody] Reception reception)
         {
             if (ModelState.IsValid && id == reception.Id)
             {
-                _unitOfWork.Receptions.UpdateAsync(reception);
+                var chevillard = await _unitOfWork.Chevillards.GetByIdAsync(reception.Chevillard.Id);
+                var stabulationVaches = await _unitOfWork.Stabulations.GetByIdAsync(reception.StabulationVaches.Id);
+                var stabulationMoutons = await _unitOfWork.Stabulations.GetByIdAsync(reception.StabulationMoutons.Id);
+                var stabulationBovins = await _unitOfWork.Stabulations.GetByIdAsync(reception.StabulationBovins.Id);
+                var acheteurIntestin = await _unitOfWork.Clients.GetByIdAsync(reception.AcheteurIntestin.Id);
+                var acheteurPeau = await _unitOfWork.Clients.GetByIdAsync(reception.AcheteurPeau.Id);
+                var acheteurTete = await _unitOfWork.Clients.GetByIdAsync(reception.AcheteurTete.Id);
+                var acheteurAutre = await _unitOfWork.Clients.GetByIdAsync(reception.AcheteurAutre.Id);
+                var rec = new Reception
+                {
+                    Id = reception.Id,
+                    Chevillard = chevillard,
+                    Tripier = reception.Tripier,
+                    Nombre = reception.Nombre,
+                    StabulationVaches = stabulationVaches,
+                    StabulationMoutons = stabulationMoutons,
+                    StabulationBovins = stabulationBovins,
+                    NbBovins = reception.NbBovins,
+                    NbVaches = reception.NbVaches,
+                    NbMoutons = reception.NbMoutons,
+                    AcheteurIntestin = acheteurIntestin,
+                    AcheteurPeau = acheteurPeau,
+                    AcheteurTete = acheteurTete,
+                    AcheteurAutre = acheteurAutre
+
+                };
+                await _unitOfWork.Receptions.UpdateAsync(rec);
                 return Ok(reception);
             }
             return BadRequest(ModelState);
         }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Reception>> Delete(int id)
+        {
+            var reception = await _unitOfWork.Receptions.GetByIdAsync(id);
+            if (reception == null)
+            {
+                return NotFound();
+            }
+            await _unitOfWork.Receptions.DeleteAsync(id);
+            return Ok(reception);
+        }
     }
+
 }

@@ -24,7 +24,7 @@ namespace Abattage_BackEnd.Repositories.Implementations
             {
                 query = query.Include(includeProperty);
             }
-            return await query.ToListAsync();
+            return await query.AsNoTracking().OrderBy(t => EF.Property<int>(t, "Id")).ToListAsync();
         }
 
 
