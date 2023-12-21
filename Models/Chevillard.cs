@@ -8,7 +8,7 @@ namespace Abattage_BackEnd.Models
 
         public string Cin { get; set; }
         public string CinImg { get; set; }
-        public int AcheteurIntestinalId { get; set; }
+        public int AcheteurIntestniId { get; set; }
         public Client AcheteurIntestin { get; set; }
         public int AcheteurPeauId { get; set; }
         public Client AcheteurPeau { get; set; }

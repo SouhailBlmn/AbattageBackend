@@ -3,20 +3,17 @@ using System;
 using Abattage_BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Abattage_BackEnd.Migrations.AppDb
+namespace Abattage_BackEnd.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231220122544_Initializing App Db - All tables creations")]
-    partial class InitializingAppDbAlltablescreations
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +135,7 @@ namespace Abattage_BackEnd.Migrations.AppDb
                     b.Property<int>("AcheteurIntestinId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("AcheteurIntestinalId")
+                    b.Property<int>("AcheteurIntestniId")
                         .HasColumnType("integer");
 
                     b.Property<int>("AcheteurPeauId")

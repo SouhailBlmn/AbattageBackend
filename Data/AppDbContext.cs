@@ -11,10 +11,12 @@ namespace Abattage_BackEnd.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseIdentityColumns();
             modelBuilder.Entity<ArticleBetail>()
                 .HasMany(a => a.Types)
                 .WithMany(t => t.Articles)
                 .UsingEntity(j => j.ToTable("ArticlesTypseBetails"));
+
         }
 
         public DbSet<ArticleBetail> ArticlesBetails { get; set; }

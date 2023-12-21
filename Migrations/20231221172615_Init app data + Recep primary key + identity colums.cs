@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Abattage_BackEnd.Migrations.AppDb
+namespace Abattage_BackEnd.Migrations
 {
     /// <inheritdoc />
-    public partial class InitializingAppDbAlltablescreations : Migration
+    public partial class InitappdataRecepprimarykeyidentitycolums : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -119,7 +119,7 @@ namespace Abattage_BackEnd.Migrations.AppDb
                     Plafond = table.Column<float>(type: "real", nullable: true),
                     Cin = table.Column<string>(type: "text", nullable: false),
                     CinImg = table.Column<string>(type: "text", nullable: false),
-                    AcheteurIntestinalId = table.Column<int>(type: "integer", nullable: false),
+                    AcheteurIntestniId = table.Column<int>(type: "integer", nullable: false),
                     AcheteurIntestinId = table.Column<int>(type: "integer", nullable: false),
                     AcheteurPeauId = table.Column<int>(type: "integer", nullable: false),
                     AcheteurTeteId = table.Column<int>(type: "integer", nullable: false),

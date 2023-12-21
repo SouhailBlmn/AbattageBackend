@@ -1,8 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Abattage_BackEnd.Models
 {
     public class Reception
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public int ChevillardId { get; set; }
         public Chevillard Chevillard { get; set; }
         public int? Tripier { get; set; }
         public int Nombre { get; set; }
