@@ -28,7 +28,15 @@ namespace Abattage_BackEnd.Repositories.Implementations
 
         public Task<TypeBetail> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+
+            var typeBetail = this._context.TypesBetails.FirstOrDefaultAsync(t => t.Id == id);
+            if (typeBetail == null)
+            {
+                return null;
+            }
+            this._context.TypesBetails.Remove(typeBetail.Result);
+            this._context.SaveChanges();
+            return Task.FromResult(typeBetail.Result);
         }
 
         public async Task<IEnumerable<TypeBetail>> GetAllAsync(params Expression<Func<TypeBetail, object>>[] includeProperties)

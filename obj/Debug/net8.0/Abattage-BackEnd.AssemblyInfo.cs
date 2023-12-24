@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Abattage-BackEnd")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+59441fe51b1a8fb8e8827834b8264e461fb32a01")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ed42e3c074280d9a63716857db7d78b0dbafde9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Abattage-BackEnd")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Abattage-BackEnd")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

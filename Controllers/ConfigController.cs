@@ -1,3 +1,4 @@
+using Abattage_BackEnd.DTO;
 using Abattage_BackEnd.Models;
 using Abattage_BackEnd.UnitOfWork;
 using Microsoft.AspNetCore.Http;
@@ -32,17 +33,26 @@ namespace Abattage_BackEnd.Controllers
         }
 
         [HttpPost("typesBetails")]
-        public async Task<IActionResult> AddTypeBetail(TypeBetail typeBetail)
+        public async Task<IActionResult> AddTypeBetail(TypeBetailDTO typeBetail)
         {
-            var newTypeBetail = await _unitOfWork.TypesBetails.AddAsync(typeBetail);
+            var t = new TypeBetail
+            {
+                Designation = typeBetail.Designation
+            };
+            var newTypeBetail = await _unitOfWork.TypesBetails.AddAsync(t);
             return Ok(newTypeBetail);
 
         }
 
         [HttpPut("typesBetails")]
-        public async Task<IActionResult> UpdateTypeBetail(TypeBetail typeBetail)
+        public async Task<IActionResult> UpdateTypeBetail(TypeBetailDTO typeBetail)
         {
-            var updatedTypeBetail = await _unitOfWork.TypesBetails.UpdateAsync(typeBetail);
+            var t = new TypeBetail
+            {
+                Id = typeBetail.Id ?? 0,
+                Designation = typeBetail.Designation
+            };
+            var updatedTypeBetail = await _unitOfWork.TypesBetails.UpdateAsync(t);
             return Ok(updatedTypeBetail);
         }
 
