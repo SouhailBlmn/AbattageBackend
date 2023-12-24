@@ -46,6 +46,7 @@ namespace Abattage_BackEnd.Data
         public DbSet<Planification> Planifications { get; set; }
         public DbSet<ArticleParAnimal> ArticleParAnimals { get; set; }
         public DbSet<ArticleTypeBetail> ArticlesTypesBetails { get; set; }
+        public DbSet<Depot> Depots { get; set; }
 
 
 

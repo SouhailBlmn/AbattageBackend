@@ -293,7 +293,43 @@ namespace Abattage_BackEnd.Controllers
 
 
 
+        //Depot CRUD
 
+        [HttpGet("depots")]
+        public async Task<IActionResult> GetDepots()
+        {
+            var depots = await _unitOfWork.Depots.GetAllAsync();
+            return Ok(depots);
+        }
+
+        [HttpPost("depots")]
+
+        public async Task<IActionResult> AddDepot(Depot depot)
+        {
+            var newDepot = await _unitOfWork.Depots.AddAsync(depot);
+            return Ok(newDepot);
+
+        }
+
+        [HttpPut("depots")]
+
+        public async Task<IActionResult> UpdateDepot(Depot depot)
+        {
+            var updatedDepot = await _unitOfWork.Depots.UpdateAsync(depot);
+            return Ok(updatedDepot);
+        }
+
+
+        [HttpDelete("depots/{id}")]
+
+        public async Task<IActionResult> DeleteDepot(int id)
+        {
+            var deletedDepot = await _unitOfWork.Depots.DeleteAsync(id);
+            return Ok(deletedDepot);
+
+
+
+        }
 
 
 

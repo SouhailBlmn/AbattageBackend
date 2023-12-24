@@ -18,6 +18,8 @@ namespace Abattage_BackEnd.UnitOfWork
         IRepository<Planification> Planifications { get; }
         IRepository<ArticleParAnimal> ArticleParAnimals { get; }
         IRepository<ArticleTypeBetail> ArticlesTypeBetails { get; }
+
+        IRepository<Depot> Depots { get; }
         Task SaveChangesAync();
     }
 

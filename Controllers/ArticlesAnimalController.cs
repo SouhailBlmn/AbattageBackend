@@ -21,7 +21,7 @@ namespace MyApp.Namespace
         [HttpGet]
         public async Task<IActionResult> GetArticlesAnimal()
         {
-            var articlesAnimal = await _unitOfWork.ArticleParAnimals.GetAllAsync(a => a.ArticleType, a => a.Animal, a => a.Status);
+            var articlesAnimal = await _unitOfWork.ArticleParAnimals.GetAllAsync(a => a.ArticleType, a => a.Animal, a => a.Status, a => a.Depot);
             return Ok(articlesAnimal);
         }
 
@@ -91,9 +91,14 @@ namespace MyApp.Namespace
                 Code_barre = articleAnimal.Code_barre,
                 Date_generee = articleAnimal.Date_generee,
                 ArticleTypeId = articleAnimal.ArticleTypeId,
-                Poid = articleAnimal.Poid ?? 0
+                Poid = articleAnimal.Poid ?? 0,
 
             };
+            if (articleAnimal.Depot != 0)
+            {
+                a.DepotId = articleAnimal.Depot;
+            }
+
             var updatedArticleAnimal = await _unitOfWork.ArticleParAnimals.UpdateAsync(a);
             return Ok(updatedArticleAnimal);
         }

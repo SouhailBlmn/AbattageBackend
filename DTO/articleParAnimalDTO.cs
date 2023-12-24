@@ -9,6 +9,7 @@ public class ArticleParAnimalDTO
     public DateTime Date_generee { get; set; }
     public int ArticleTypeId { get; set; }
     public int? Poid { get; set; }
+    public int Depot { get; set; }
 
 
 }

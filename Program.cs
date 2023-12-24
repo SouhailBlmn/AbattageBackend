@@ -581,6 +581,33 @@ app.MapControllers();
 
 //     // Carcasses
 
+//     var depots = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>().Depots;
+
+//     Depot depot1 = new Depot
+//     {
+//         Id = 1,
+//         Nom = "Depot 1",
+//         Adresse = "Adresse 1"
+//     };
+
+//     Depot depot2 = new Depot
+//     {
+//         Id = 2,
+//         Nom = "Depot 2",
+//         Adresse = "Adresse 2"
+//     };
+
+//     Depot depot3 = new Depot
+//     {
+//         Id = 3,
+//         Nom = "Depot 3",
+//         Adresse = "Adresse 3"
+//     };
+
+//     await depots.AddAsync(depot1);
+//     await depots.AddAsync(depot2);
+//     await depots.AddAsync(depot3);
+
 
 
 //     // Add your seeding logic here

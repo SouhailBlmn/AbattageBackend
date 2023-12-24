@@ -18,5 +18,7 @@ namespace Abattage_BackEnd.Models
         public int? ArticleTypeId { get; set; }
         public ArticleBetail ArticleType { get; set; }
         public int? Poid { get; set; }
+        public int? DepotId { get; set; }
+        public Depot? Depot { get; set; }
     }
 }

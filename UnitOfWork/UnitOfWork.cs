@@ -21,6 +21,7 @@ namespace Abattage_BackEnd.UnitOfWork
         private IRepository<Planification> _planifications;
         private IRepository<ArticleParAnimal> _articleParAnimals;
         private IRepository<ArticleTypeBetail> _articlesTypeBetails;
+        private IRepository<Depot> _depots;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -52,6 +53,8 @@ namespace Abattage_BackEnd.UnitOfWork
         public IRepository<ArticleParAnimal> ArticleParAnimals => _articleParAnimals ??= new Repository<ArticleParAnimal>(_context);
 
         public IRepository<ArticleTypeBetail> ArticlesTypeBetails => _articlesTypeBetails ??= new Repository<ArticleTypeBetail>(_context);
+
+        public IRepository<Depot> Depots => _depots ??= new Repository<Depot>(_context);
 
         public async Task SaveChangesAync()
         {
