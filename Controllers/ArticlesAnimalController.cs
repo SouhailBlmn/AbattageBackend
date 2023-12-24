@@ -25,6 +25,14 @@ namespace MyApp.Namespace
             return Ok(articlesAnimal);
         }
 
+        [HttpGet("viandes")]
+        public async Task<IActionResult> GetViandes()
+        {
+            var articlesAnimal = await _unitOfWork.ArticleParAnimals.GetAllAsync(a => a.ArticleType, a => a.Animal, a => a.Status);
+            var viandes = articlesAnimal.Where(a => a.ArticleType.Designation.Contains("Viande") || a.ArticleType.Designation.Contains("viande"));
+            return Ok(viandes);
+        }
+
         //get by id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetArticleAnimalById(int id)
@@ -36,20 +44,37 @@ namespace MyApp.Namespace
         [HttpPost]
         public async Task<IActionResult> AddArticleAnimal(ArticleParAnimalDTO articleAnimal)
         {
-            var a = new ArticleParAnimal
-            {
-                AnimalId = articleAnimal.AnimalId,
-                StatusId = 2,//Id status en attente de validation
-                Designation = articleAnimal.Designation,
-                Code_barre = articleAnimal.Code_barre,
-                Date_generee = articleAnimal.Date_generee,
-                ArticleTypeId = articleAnimal.ArticleTypeId,
-                Poid = 0
 
-            };
-            var newArticleAnimal = await _unitOfWork.ArticleParAnimals.AddAsync(a);
-            newArticleAnimal.Code_barre = newArticleAnimal.Id.ToString();
-            await _unitOfWork.ArticleParAnimals.UpdateAsync(newArticleAnimal);
+            var animal = await _unitOfWork.Carcasses.GetByIdAsync(articleAnimal.AnimalId, a => a.TypeBetail);
+
+            int qteOfPart = _unitOfWork.ArticlesTypeBetails.GetAllAsync().Result.Where(ab => ab.TypeBetailId == animal.TypeBetailId && ab.ArticleBetailId == articleAnimal.ArticleTypeId).FirstOrDefault().Qte;
+
+
+            List<ArticleParAnimal> articlesToInsert = [];
+
+
+            for (int i = 0; i < qteOfPart; i++)
+            {
+                articlesToInsert.Add(new ArticleParAnimal
+                {
+                    AnimalId = articleAnimal.AnimalId,
+                    StatusId = articleAnimal.StatusId,
+                    Designation = articleAnimal.Designation,
+                    Code_barre = articleAnimal.Code_barre,
+                    Date_generee = articleAnimal.Date_generee,
+                    ArticleTypeId = articleAnimal.ArticleTypeId,
+                    Poid = articleAnimal.Poid ?? 0
+                });
+            }
+
+            var newArticleAnimal = await _unitOfWork.ArticleParAnimals.AddRangeAsync(articlesToInsert);
+
+            foreach (var article in newArticleAnimal)
+            {
+                article.Code_barre = article.Id.ToString();
+            }
+
+            await _unitOfWork.ArticleParAnimals.UpdateRangeAsync(newArticleAnimal);
             return Ok(newArticleAnimal);
 
         }
@@ -66,7 +91,7 @@ namespace MyApp.Namespace
                 Code_barre = articleAnimal.Code_barre,
                 Date_generee = articleAnimal.Date_generee,
                 ArticleTypeId = articleAnimal.ArticleTypeId,
-                Poid = 0
+                Poid = articleAnimal.Poid ?? 0
 
             };
             var updatedArticleAnimal = await _unitOfWork.ArticleParAnimals.UpdateAsync(a);

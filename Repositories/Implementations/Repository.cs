@@ -59,6 +59,20 @@ namespace Abattage_BackEnd.Repositories.Implementations
             await _context.SaveChangesAsync();
             return entity;
         }
+
+        public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+            return entities;
+        }
+
+        public async Task<IEnumerable<T>> UpdateRangeAsync(IEnumerable<T> entities)
+        {
+            _dbSet.UpdateRange(entities);
+            await _context.SaveChangesAsync();
+            return entities;
+        }
     }
 
 }

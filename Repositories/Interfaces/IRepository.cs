@@ -9,6 +9,10 @@ namespace Abattage_BackEnd.Repositories.Interfaces
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(int id);
+
+        Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
+
+        Task<IEnumerable<T>> UpdateRangeAsync(IEnumerable<T> entities);
     }
 
 }

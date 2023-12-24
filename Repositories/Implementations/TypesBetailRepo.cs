@@ -21,6 +21,11 @@ namespace Abattage_BackEnd.Repositories.Implementations
             return entity;
         }
 
+        public Task<IEnumerable<TypeBetail>> AddRangeAsync(IEnumerable<TypeBetail> entities)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<TypeBetail> DeleteAsync(int id)
         {
             throw new NotImplementedException();
@@ -72,6 +77,13 @@ namespace Abattage_BackEnd.Repositories.Implementations
             return Task.FromResult(entity);
 
 
+        }
+
+        public Task<IEnumerable<TypeBetail>> UpdateRangeAsync(IEnumerable<TypeBetail> entities)
+        {
+            this._context.TypesBetails.UpdateRange(entities);
+            this._context.SaveChanges();
+            return Task.FromResult(entities);
         }
     }
 
