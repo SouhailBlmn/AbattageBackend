@@ -19,13 +19,15 @@ namespace Abattage_BackEnd.UnitOfWork
         private IRepository<Chevillard> _chevillards;
         private IRepository<Client> _clients;
         private IRepository<Planification> _planifications;
+        private IRepository<ArticleParAnimal> _articleParAnimals;
+        private IRepository<ArticleTypeBetail> _articlesTypeBetails;
 
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
         }
 
-        public IRepository<TypeBetail> TypesBetails => _typesBetails ??= new Repository<TypeBetail>(_context);
+        public IRepository<TypeBetail> TypesBetails => _typesBetails ??= new TypesBetailRepo(_context);
 
         public IRepository<ArticleBetail> ArticlesBetails => _articlesBetails ??= new Repository<ArticleBetail>(_context);
 
@@ -46,6 +48,10 @@ namespace Abattage_BackEnd.UnitOfWork
         public IRepository<Client> Clients => _clients ??= new Repository<Client>(_context);
 
         public IRepository<Planification> Planifications => _planifications ??= new Repository<Planification>(_context);
+
+        public IRepository<ArticleParAnimal> ArticleParAnimals => _articleParAnimals ??= new Repository<ArticleParAnimal>(_context);
+
+        public IRepository<ArticleTypeBetail> ArticlesTypeBetails => _articlesTypeBetails ??= new Repository<ArticleTypeBetail>(_context);
 
         public async Task SaveChangesAync()
         {

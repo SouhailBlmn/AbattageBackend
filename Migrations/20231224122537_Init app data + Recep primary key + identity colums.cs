@@ -18,7 +18,7 @@ namespace Abattage_BackEnd.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Designstion = table.Column<string>(type: "text", nullable: false)
+                    Designation = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -159,7 +159,7 @@ namespace Abattage_BackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticlesTypseBetails",
+                name: "ArticleBetailTypeBetail",
                 columns: table => new
                 {
                     ArticlesId = table.Column<int>(type: "integer", nullable: false),
@@ -167,16 +167,43 @@ namespace Abattage_BackEnd.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticlesTypseBetails", x => new { x.ArticlesId, x.TypesId });
+                    table.PrimaryKey("PK_ArticleBetailTypeBetail", x => new { x.ArticlesId, x.TypesId });
                     table.ForeignKey(
-                        name: "FK_ArticlesTypseBetails_ArticlesBetails_ArticlesId",
+                        name: "FK_ArticleBetailTypeBetail_ArticlesBetails_ArticlesId",
                         column: x => x.ArticlesId,
                         principalTable: "ArticlesBetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArticlesTypseBetails_TypesBetails_TypesId",
+                        name: "FK_ArticleBetailTypeBetail_TypesBetails_TypesId",
                         column: x => x.TypesId,
+                        principalTable: "TypesBetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArticlesTypesBetails",
+                columns: table => new
+                {
+                    ArticleBetailId = table.Column<int>(type: "integer", nullable: false),
+                    TypeBetailId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Qte = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticlesTypesBetails", x => new { x.ArticleBetailId, x.TypeBetailId });
+                    table.ForeignKey(
+                        name: "FK_ArticlesTypesBetails_ArticlesBetails_ArticleBetailId",
+                        column: x => x.ArticleBetailId,
+                        principalTable: "ArticlesBetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArticlesTypesBetails_TypesBetails_TypeBetailId",
+                        column: x => x.TypeBetailId,
                         principalTable: "TypesBetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -326,10 +353,64 @@ namespace Abattage_BackEnd.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ArticleParAnimals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Designation = table.Column<string>(type: "text", nullable: true),
+                    AnimalId = table.Column<int>(type: "integer", nullable: true),
+                    StatusId = table.Column<int>(type: "integer", nullable: true),
+                    Code_barre = table.Column<string>(type: "text", nullable: false),
+                    Date_generee = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ArticleTypeId = table.Column<int>(type: "integer", nullable: true),
+                    Poid = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleParAnimals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ArticleParAnimals_ArticleStatuses_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "ArticleStatuses",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ArticleParAnimals_ArticlesBetails_ArticleTypeId",
+                        column: x => x.ArticleTypeId,
+                        principalTable: "ArticlesBetails",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ArticleParAnimals_Carcasses_AnimalId",
+                        column: x => x.AnimalId,
+                        principalTable: "Carcasses",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_ArticlesTypseBetails_TypesId",
-                table: "ArticlesTypseBetails",
+                name: "IX_ArticleBetailTypeBetail_TypesId",
+                table: "ArticleBetailTypeBetail",
                 column: "TypesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleParAnimals_AnimalId",
+                table: "ArticleParAnimals",
+                column: "AnimalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleParAnimals_ArticleTypeId",
+                table: "ArticleParAnimals",
+                column: "ArticleTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleParAnimals_StatusId",
+                table: "ArticleParAnimals",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticlesTypesBetails_TypeBetailId",
+                table: "ArticlesTypesBetails",
+                column: "TypeBetailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carcasses_AnimalStatusId",
@@ -426,16 +507,22 @@ namespace Abattage_BackEnd.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArticleStatuses");
+                name: "ArticleBetailTypeBetail");
 
             migrationBuilder.DropTable(
-                name: "ArticlesTypseBetails");
+                name: "ArticleParAnimals");
 
             migrationBuilder.DropTable(
-                name: "Carcasses");
+                name: "ArticlesTypesBetails");
 
             migrationBuilder.DropTable(
                 name: "Planifications");
+
+            migrationBuilder.DropTable(
+                name: "ArticleStatuses");
+
+            migrationBuilder.DropTable(
+                name: "Carcasses");
 
             migrationBuilder.DropTable(
                 name: "ArticlesBetails");
@@ -444,13 +531,13 @@ namespace Abattage_BackEnd.Migrations
                 name: "AnimalStatuses");
 
             migrationBuilder.DropTable(
+                name: "Receptions");
+
+            migrationBuilder.DropTable(
                 name: "TypeAbattages");
 
             migrationBuilder.DropTable(
                 name: "TypesBetails");
-
-            migrationBuilder.DropTable(
-                name: "Receptions");
 
             migrationBuilder.DropTable(
                 name: "Chevillards");

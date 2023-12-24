@@ -28,9 +28,14 @@ namespace Abattage_BackEnd.Repositories.Implementations
         }
 
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] includeProperties)
         {
-            return await _dbSet.FindAsync(id);
+            IQueryable<T> query = _dbSet;
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+            return await query.AsNoTracking().FirstOrDefaultAsync(t => EF.Property<int>(t, "Id") == id);
         }
 
         public async Task<T> AddAsync(T entity)

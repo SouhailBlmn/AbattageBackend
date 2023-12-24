@@ -51,19 +51,20 @@ namespace MyApp.Namespace
                 var acheteurAutre = await _unitOfWork.Clients.GetByIdAsync(reception.AcheteurAutre.Id);
                 var rec = new Reception
                 {
-                    Chevillard = chevillard,
+                    ChevillardId = chevillard.Id,
                     Tripier = reception.Tripier,
                     Nombre = reception.Nombre,
-                    StabulationVaches = stabulationVaches,
-                    StabulationMoutons = stabulationMoutons,
-                    StabulationBovins = stabulationBovins,
+                    StabulationBovinsId = stabulationBovins.Id,
+                    StabulationMoutonsId = stabulationMoutons.Id,
+                    StabulationVachesId = stabulationVaches.Id,
                     NbBovins = reception.NbBovins,
                     NbVaches = reception.NbVaches,
                     NbMoutons = reception.NbMoutons,
-                    AcheteurIntestin = acheteurIntestin,
-                    AcheteurPeau = acheteurPeau,
-                    AcheteurTete = acheteurTete,
-                    AcheteurAutre = acheteurAutre
+                    AcheteurAutreId = acheteurAutre.Id,
+                    AcheteurIntestinId = acheteurIntestin.Id,
+                    AcheteurPeauId = acheteurPeau.Id,
+                    AcheteurTeteId = acheteurTete.Id
+
 
                 };
                 await _unitOfWork.Receptions.AddAsync(rec);

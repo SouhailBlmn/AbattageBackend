@@ -23,6 +23,14 @@ namespace Abattage_BackEnd.Controllers
             return Ok(typesBetails);
         }
 
+        //get by id
+        [HttpGet("typesBetails/{id}")]
+        public async Task<IActionResult> GetTypeBetailById(int id)
+        {
+            var typeBetail = await _unitOfWork.TypesBetails.GetByIdAsync(id);
+            return Ok(typeBetail);
+        }
+
         [HttpPost("typesBetails")]
         public async Task<IActionResult> AddTypeBetail(TypeBetail typeBetail)
         {
@@ -183,6 +191,108 @@ namespace Abattage_BackEnd.Controllers
             var client = await _unitOfWork.Clients.GetByIdAsync(id);
             return Ok(client);
         }
+
+
+
+        //CRUD for animalstatus
+        [HttpGet("animalStatus")]
+        public async Task<IActionResult> GetAnimalStatus()
+        {
+            var animalStatus = await _unitOfWork.AnimalStatuses.GetAllAsync();
+            return Ok(animalStatus);
+        }
+
+        [HttpPost("animalStatus")]
+        public async Task<IActionResult> AddAnimalStatus(AnimalStatus animalStatus)
+        {
+            var newAnimalStatus = await _unitOfWork.AnimalStatuses.AddAsync(animalStatus);
+            return Ok(newAnimalStatus);
+
+        }
+
+        [HttpPut("animalStatus")]
+        public async Task<IActionResult> UpdateAnimalStatus(AnimalStatus animalStatus)
+        {
+            var updatedAnimalStatus = await _unitOfWork.AnimalStatuses.UpdateAsync(animalStatus);
+            return Ok(updatedAnimalStatus);
+        }
+
+        [HttpDelete("animalStatus/{id}")]
+        public async Task<IActionResult> DeleteAnimalStatus(int id)
+        {
+            var deletedAnimalStatus = await _unitOfWork.AnimalStatuses.DeleteAsync(id);
+            return Ok(deletedAnimalStatus);
+        }
+
+
+
+        //article betail CRUD
+
+        [HttpGet("articlesBetail")]
+        public async Task<IActionResult> GetArticlesBetail()
+        {
+            var articlesBetail = await _unitOfWork.ArticlesBetails.GetAllAsync();
+            return Ok(articlesBetail);
+        }
+
+        [HttpPost("articlesBetail")]
+        public async Task<IActionResult> AddArticleBetail(ArticleBetail articleBetail)
+        {
+            var newArticleBetail = await _unitOfWork.ArticlesBetails.AddAsync(articleBetail);
+            return Ok(newArticleBetail);
+
+        }
+
+        [HttpPut("articlesBetail")]
+        public async Task<IActionResult> UpdateArticleBetail(ArticleBetail articleBetail)
+        {
+            var updatedArticleBetail = await _unitOfWork.ArticlesBetails.UpdateAsync(articleBetail);
+            return Ok(updatedArticleBetail);
+        }
+
+        [HttpDelete("articlesBetail/{id}")]
+        public async Task<IActionResult> DeleteArticleBetail(int id)
+        {
+            var deletedArticleBetail = await _unitOfWork.ArticlesBetails.DeleteAsync(id);
+            return Ok(deletedArticleBetail);
+        }
+
+
+
+        //article status CRUD
+
+        [HttpGet("articlesStatus")]
+        public async Task<IActionResult> GetArticlesStatus()
+        {
+            var articlesStatus = await _unitOfWork.ArticleStatuses.GetAllAsync();
+            return Ok(articlesStatus);
+        }
+
+        [HttpPost("articlesStatus")]
+        public async Task<IActionResult> AddArticleStatus(ArticleStatus articleStatus)
+        {
+            var newArticleStatus = await _unitOfWork.ArticleStatuses.AddAsync(articleStatus);
+            return Ok(newArticleStatus);
+
+        }
+
+        [HttpPut("articlesStatus")]
+        public async Task<IActionResult> UpdateArticleStatus(ArticleStatus articleStatus)
+        {
+            var updatedArticleStatus = await _unitOfWork.ArticleStatuses.UpdateAsync(articleStatus);
+            return Ok(updatedArticleStatus);
+        }
+
+        [HttpDelete("articlesStatus/{id}")]
+
+        public async Task<IActionResult> DeleteArticleStatus(int id)
+        {
+            var deletedArticleStatus = await _unitOfWork.ArticleStatuses.DeleteAsync(id);
+            return Ok(deletedArticleStatus);
+        }
+
+
+
 
 
 

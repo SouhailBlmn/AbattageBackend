@@ -16,6 +16,8 @@ namespace Abattage_BackEnd.UnitOfWork
         IRepository<Chevillard> Chevillards { get; }
         IRepository<Client> Clients { get; }
         IRepository<Planification> Planifications { get; }
+        IRepository<ArticleParAnimal> ArticleParAnimals { get; }
+        IRepository<ArticleTypeBetail> ArticlesTypeBetails { get; }
         Task SaveChangesAync();
     }
 

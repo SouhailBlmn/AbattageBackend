@@ -30,7 +30,7 @@ namespace Abattage_BackEnd.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Designstion")
+                    b.Property<string>("Designation")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -56,6 +56,47 @@ namespace Abattage_BackEnd.Migrations
                     b.ToTable("ArticlesBetails");
                 });
 
+            modelBuilder.Entity("Abattage_BackEnd.Models.ArticleParAnimal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AnimalId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ArticleTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Code_barre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Date_generee")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Designation")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Poid")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StatusId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimalId");
+
+                    b.HasIndex("ArticleTypeId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("ArticleParAnimals");
+                });
+
             modelBuilder.Entity("Abattage_BackEnd.Models.ArticleStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -71,6 +112,30 @@ namespace Abattage_BackEnd.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ArticleStatuses");
+                });
+
+            modelBuilder.Entity("Abattage_BackEnd.Models.ArticleTypeBetail", b =>
+                {
+                    b.Property<int>("ArticleBetailId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TypeBetailId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Qte")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ArticleBetailId", "TypeBetailId");
+
+                    b.HasIndex("TypeBetailId");
+
+                    b.ToTable("ArticlesTypesBetails", (string)null);
                 });
 
             modelBuilder.Entity("Abattage_BackEnd.Models.Carcasse", b =>
@@ -380,7 +445,47 @@ namespace Abattage_BackEnd.Migrations
 
                     b.HasIndex("TypesId");
 
-                    b.ToTable("ArticlesTypseBetails", (string)null);
+                    b.ToTable("ArticleBetailTypeBetail");
+                });
+
+            modelBuilder.Entity("Abattage_BackEnd.Models.ArticleParAnimal", b =>
+                {
+                    b.HasOne("Abattage_BackEnd.Models.Carcasse", "Animal")
+                        .WithMany()
+                        .HasForeignKey("AnimalId");
+
+                    b.HasOne("Abattage_BackEnd.Models.ArticleBetail", "ArticleType")
+                        .WithMany()
+                        .HasForeignKey("ArticleTypeId");
+
+                    b.HasOne("Abattage_BackEnd.Models.ArticleStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
+
+                    b.Navigation("Animal");
+
+                    b.Navigation("ArticleType");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("Abattage_BackEnd.Models.ArticleTypeBetail", b =>
+                {
+                    b.HasOne("Abattage_BackEnd.Models.ArticleBetail", "ArticleBetail")
+                        .WithMany("ArticleTypeBetails")
+                        .HasForeignKey("ArticleBetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Abattage_BackEnd.Models.TypeBetail", "TypeBetail")
+                        .WithMany("ArticleTypeBetails")
+                        .HasForeignKey("TypeBetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ArticleBetail");
+
+                    b.Navigation("TypeBetail");
                 });
 
             modelBuilder.Entity("Abattage_BackEnd.Models.Carcasse", b =>
@@ -550,6 +655,16 @@ namespace Abattage_BackEnd.Migrations
                         .HasForeignKey("TypesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Abattage_BackEnd.Models.ArticleBetail", b =>
+                {
+                    b.Navigation("ArticleTypeBetails");
+                });
+
+            modelBuilder.Entity("Abattage_BackEnd.Models.TypeBetail", b =>
+                {
+                    b.Navigation("ArticleTypeBetails");
                 });
 #pragma warning restore 612, 618
         }

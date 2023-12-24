@@ -1,3 +1,4 @@
+using Abattage_BackEnd;
 using Abattage_BackEnd.Data;
 using Abattage_BackEnd.Models;
 using Abattage_BackEnd.UnitOfWork;
@@ -43,7 +44,7 @@ builder.Services.AddDbContext<UserDbContext>(opt =>
 
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseNpgsql(builder.Configuration.GetConnectionString("AppDbString"))
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("AppDbString")).EnableSensitiveDataLogging()
 );
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -214,5 +215,379 @@ app.MapControllers();
 
 // };
 
+
+// //SEED START
+
+
+
+// using (var serviceScope = app.Services.CreateScope())
+// {
+//     var context = serviceScope.ServiceProvider.GetService<AppDbContext>(); // Replace MyDbContext with your DbContext class
+//     context.Database.EnsureDeleted();
+//     context.Database.EnsureCreated();
+
+
+//     //Seeding data for all my models
+//     //Seed data into typeBetail table
+
+
+//     //Animal statuses
+//     AnimalStatus animalStatus1 = new AnimalStatus
+//     {
+//         Id = 1,
+//         Designation = "Recu"
+//     };
+//     AnimalStatus animalStatus2 = new AnimalStatus
+//     {
+//         Id = 2,
+//         Designation = "En attante de pointage"
+//     };
+
+//     AnimalStatus animalStatus3 = new AnimalStatus
+//     {
+//         Id = 3,
+//         Designation = "Poitu"
+//     };
+
+//     AnimalStatus animalStatus4 = new AnimalStatus
+//     {
+//         Id = 4,
+//         Designation = "Planifie"
+//     };
+
+//     AnimalStatus animalStatus5 = new AnimalStatus
+//     {
+//         Id = 5,
+//         Designation = "Abattu"
+//     };
+
+
+//     //Saving animal statuses
+//     var animalStatuses = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>().AnimalStatuses;
+//     await animalStatuses.AddAsync(animalStatus1);
+//     await animalStatuses.AddAsync(animalStatus2);
+//     await animalStatuses.AddAsync(animalStatus3);
+//     await animalStatuses.AddAsync(animalStatus4);
+//     await animalStatuses.AddAsync(animalStatus5);
+
+
+
+//     //Article statuses
+//     ArticleStatus articleStatus1 = new ArticleStatus
+//     {
+//         Id = 1,
+//         Libelle = "Validee"
+//     };
+
+//     ArticleStatus articleStatus2 = new ArticleStatus
+//     {
+//         Id = 2,
+//         Libelle = "En attente de validation"
+//     };
+
+//     ArticleStatus articleStatus3 = new ArticleStatus
+//     {
+//         Id = 3,
+//         Libelle = "Probeleme de foie"
+//     };
+
+//     ArticleStatus articleStatus4 = new ArticleStatus
+//     {
+//         Id = 4,
+//         Libelle = "Probleme de peau"
+//     };
+
+//     ArticleStatus articleStatus5 = new ArticleStatus
+//     {
+//         Id = 5,
+//         Libelle = "Probleme de tete"
+//     };
+
+//     ArticleStatus articleStatus6 = new ArticleStatus
+//     {
+//         Id = 6,
+//         Libelle = "Probleme de intestin"
+//     };
+
+
+
+//     //Save article statuses
+//     var articleStatuses = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>().ArticleStatuses;
+//     await articleStatuses.AddAsync(articleStatus1);
+//     await articleStatuses.AddAsync(articleStatus2);
+//     await articleStatuses.AddAsync(articleStatus3);
+//     await articleStatuses.AddAsync(articleStatus4);
+//     await articleStatuses.AddAsync(articleStatus5);
+//     await articleStatuses.AddAsync(articleStatus6);
+
+
+
+//     //Cliens
+//     Client client1 = new Client
+//     {
+//         Id = 1,
+//         Nom = "Client 1",
+//         Plafond = 0
+//     };
+
+//     Client client2 = new Client
+//     {
+//         Id = 2,
+//         Nom = "Client 2",
+//         Plafond = 0
+//     };
+
+//     Client client3 = new Client
+//     {
+//         Id = 3,
+//         Nom = "Client 3",
+//         Plafond = 0
+//     };
+
+
+//     //Save clients
+
+//     var clients = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>().Clients;
+//     await clients.AddAsync(client1);
+//     await clients.AddAsync(client2);
+//     await clients.AddAsync(client3);
+
+
+
+//     //Stabulations
+
+//     Stabulation stabulation1 = new Stabulation
+//     {
+//         Id = 1,
+//         Designation = "Stabulation 1",
+//         Capacite = 1000,
+//         Libre = 1000,
+//         Utilisee = 0,
+//         EstPlein = false
+//     };
+
+
+//     Stabulation stabulation2 = new Stabulation
+//     {
+//         Id = 2,
+//         Designation = "Stabulation 2",
+//         Capacite = 1000,
+//         Libre = 1000,
+//         Utilisee = 0,
+//         EstPlein = false
+//     };
+
+
+//     Stabulation stabulation3 = new Stabulation
+//     {
+//         Id = 3,
+//         Designation = "Stabulation 3",
+//         Capacite = 1000,
+//         Libre = 1000,
+//         Utilisee = 0,
+//         EstPlein = false
+//     };
+
+
+//     //Save stabulations
+//     var stabulations = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>().Stabulations;
+//     await stabulations.AddAsync(stabulation1);
+//     await stabulations.AddAsync(stabulation2);
+//     await stabulations.AddAsync(stabulation3);
+
+
+
+//     //Type abattage
+
+
+//     TypeAbattage typeAbattage1 = new TypeAbattage
+//     {
+//         Id = 1,
+//         Designation = "Abattage 1"
+//     };
+
+//     TypeAbattage typeAbattage2 = new TypeAbattage
+//     {
+//         Id = 2,
+//         Designation = "Abattage 2"
+//     };
+
+//     TypeAbattage typeAbattage3 = new TypeAbattage
+//     {
+//         Id = 3,
+//         Designation = "Abattage 3"
+//     };
+
+
+//     //Save type abattage
+
+//     var typeAbattages = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>().TypeAbattages;
+
+//     await typeAbattages.AddAsync(typeAbattage1);
+//     await typeAbattages.AddAsync(typeAbattage2);
+//     await typeAbattages.AddAsync(typeAbattage3);
+
+//     // Add ArticleBetail entities
+//     var articles = new[]
+//     {
+//             new ArticleBetail { Designation = "Peau" },
+//             new ArticleBetail { Designation = "Tete" },
+//             // ... other ArticleBetail instances ...
+//         };
+
+//     foreach (var article in articles)
+//     {
+//         if (!context.ArticlesBetails.Any(a => a.Designation == article.Designation))
+//         {
+//             await context.ArticlesBetails.AddAsync(article);
+//         }
+//     }
+
+//     // Add TypeBetail entities
+//     var types = new[]
+//     {
+//             new TypeBetail { Designation = "Vache" },
+//             new TypeBetail { Designation = "Mouton" },
+//             // ... other TypeBetail instances ...
+//         };
+
+//     foreach (var type in types)
+//     {
+//         if (!context.TypesBetails.Any(t => t.Designation == type.Designation))
+//         {
+//             await context.TypesBetails.AddAsync(type);
+//         }
+//     }
+
+//     // Save changes to ensure ArticleBetail and TypeBetail are persisted
+//     await context.SaveChangesAsync();
+
+//     // Add ArticleTypeBetail entities
+//     var articleTypes = new[]
+//     {
+//             new ArticleTypeBetail
+//             {
+//                 ArticleBetailId = context.ArticlesBetails.Single(a => a.Designation == "Peau").Id,
+//                 TypeBetailId = context.TypesBetails.Single(t => t.Designation == "Vache").Id,
+//                 Qte = 1
+//             },
+//             // ... other ArticleTypeBetail instances ...
+//         };
+
+//     foreach (var articleType in articleTypes)
+//     {
+//         if (!context.ArticlesTypesBetails.Any(at => at.ArticleBetailId == articleType.ArticleBetailId && at.TypeBetailId == articleType.TypeBetailId))
+//         {
+//             await context.ArticlesTypesBetails.AddAsync(articleType);
+//         }
+//     }
+
+//     // Final save to persist ArticleTypeBetail entities
+//     await context.SaveChangesAsync();
+
+
+
+
+//     //Chevillards
+
+//     Chevillard chevillard1 = new Chevillard
+//     {
+//         Id = 1,
+//         Nom = "Chevillard 1",
+//         Plafond = 0,
+//         Cin = "CIN 1",
+//         CinImg = "CIN 1",
+//         AcheteurIntestin = client1,
+//         AcheteurPeau = client2,
+//         AcheteurTete = client3,
+//         AcheteurAutre = client1,
+//         Num_carte = "Num carte 1",
+//         Infos = "Infos 1",
+//         Telephone = "Telephone 1",
+//         Actif = true
+//     };
+
+//     Chevillard chevillard2 = new Chevillard
+//     {
+//         Id = 2,
+//         Nom = "Chevillard 2",
+//         Plafond = 0,
+//         Cin = "CIN 2",
+//         CinImg = "CIN 2",
+//         AcheteurIntestin = client1,
+//         AcheteurPeau = client2,
+//         AcheteurTete = client3,
+//         AcheteurAutre = client1,
+//         Num_carte = "Num carte 2",
+//         Infos = "Infos 2",
+//         Telephone = "Telephone 2",
+//         Actif = true
+//     };
+
+
+//     //Save chevillards
+
+//     var chevillards = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>().Chevillards;
+
+//     await chevillards.AddAsync(chevillard1);
+//     await chevillards.AddAsync(chevillard2);
+
+
+//     //Receptions
+
+//     Reception reception1 = new Reception
+//     {
+//         Id = 1,
+//         Chevillard = chevillard1,
+//         Tripier = 1,
+//         Nombre = 1,
+//         StabulationVaches = stabulation1,
+//         StabulationMoutons = stabulation2,
+//         StabulationBovins = stabulation3,
+//         NbBovins = 1,
+//         NbVaches = 1,
+//         NbMoutons = 1,
+//         AcheteurIntestin = client1,
+//         AcheteurPeau = client2,
+//         AcheteurTete = client3,
+//         AcheteurAutre = client1
+//     };
+
+//     Reception reception2 = new Reception
+//     {
+//         Id = 2,
+//         Chevillard = chevillard2,
+//         Tripier = 1,
+//         Nombre = 1,
+//         StabulationVaches = stabulation1,
+//         StabulationMoutons = stabulation2,
+//         StabulationBovins = stabulation3,
+//         NbBovins = 1,
+//         NbVaches = 1,
+//         NbMoutons = 1,
+//         AcheteurIntestin = client1,
+//         AcheteurPeau = client2,
+//         AcheteurTete = client3,
+//         AcheteurAutre = client1
+//     };
+
+
+//     //Save receptions
+
+//     var receptions = serviceScope.ServiceProvider.GetRequiredService<IUnitOfWork>().Receptions;
+
+//     await receptions.AddAsync(reception1);
+//     await receptions.AddAsync(reception2);
+
+//     // Carcasses
+
+
+
+//     // Add your seeding logic here
+//     context.SaveChanges();
+// }
+
+
+// ///SEED END 
 
 app.Run();

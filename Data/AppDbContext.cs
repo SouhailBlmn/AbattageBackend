@@ -12,10 +12,24 @@ namespace Abattage_BackEnd.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseIdentityColumns();
-            modelBuilder.Entity<ArticleBetail>()
-                .HasMany(a => a.Types)
-                .WithMany(t => t.Articles)
-                .UsingEntity(j => j.ToTable("ArticlesTypseBetails"));
+
+
+            // Configure the many-to-many relationship
+            modelBuilder.Entity<ArticleTypeBetail>()
+                .HasKey(at => new { at.ArticleBetailId, at.TypeBetailId });
+
+            modelBuilder.Entity<ArticleTypeBetail>()
+                .HasOne(at => at.ArticleBetail)
+                .WithMany(a => a.ArticleTypeBetails)
+                .HasForeignKey(at => at.ArticleBetailId);
+
+            modelBuilder.Entity<ArticleTypeBetail>()
+                .HasOne(at => at.TypeBetail)
+                .WithMany(t => t.ArticleTypeBetails)
+                .HasForeignKey(at => at.TypeBetailId);
+
+            // Configure the table name for the join entity
+            modelBuilder.Entity<ArticleTypeBetail>().ToTable("ArticlesTypesBetails");
 
         }
 
@@ -30,6 +44,9 @@ namespace Abattage_BackEnd.Data
         public DbSet<Chevillard> Chevillards { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Planification> Planifications { get; set; }
+        public DbSet<ArticleParAnimal> ArticleParAnimals { get; set; }
+        public DbSet<ArticleTypeBetail> ArticlesTypesBetails { get; set; }
+
 
 
     }
