@@ -73,9 +73,17 @@ namespace Abattage_BackEnd.Controllers
         }
 
         [HttpPost("stabulations")]
-        public async Task<IActionResult> AddStabulation(Stabulation stabulation)
+        public async Task<IActionResult> AddStabulation(StabulationDTO stabulation)
         {
-            var newStabulation = await _unitOfWork.Stabulations.AddAsync(stabulation);
+            var s = new Stabulation
+            {
+                Designation = stabulation.Designation,
+                Capacite = stabulation.Capacite ?? 0,
+                EstPlein = stabulation.EstPlein ?? false,
+                Libre = stabulation.Libre ?? (stabulation.Capacite ?? 0),
+                Utilisee = stabulation.Utilisee ?? 0
+            };
+            var newStabulation = await _unitOfWork.Stabulations.AddAsync(s);
             return Ok(newStabulation);
 
         }
