@@ -20,9 +20,14 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder =>
     {
-        builder.WithOrigins("https://localhost:4200").AllowCredentials().WithMethods(["GET", "POST", "PUT", "DELETE"]).AllowAnyHeader();
+        builder.SetIsOriginAllowed(origin => IsOriginAllowed(origin)).AllowCredentials().WithMethods(["GET", "POST", "PUT", "DELETE"]).AllowAnyHeader();
     });
 });
+
+bool IsOriginAllowed(string origin)
+{
+    return true;
+}
 
 
 
@@ -82,37 +87,37 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var roles = new[] { "Admin", "Veterinaire", "Boucher", "Eleveur", "Transporteur", "Abatteur", "Vendeur", "Acheteur" };
+using (var scope = app.Services.CreateScope())
+{
+    var roles = new[] { "Admin", "Veterinaire", "Boucher", "Eleveur", "Transporteur", "Abatteur", "Vendeur", "Acheteur" };
 
-//     foreach (var role in roles)
-//     {
-//         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-//         var usermanager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-//         if (await roleManager.RoleExistsAsync(role))
-//         {
-//             await roleManager.DeleteAsync(await roleManager.FindByNameAsync(role));
-//         }
+    foreach (var role in roles)
+    {
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var usermanager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        if (await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.DeleteAsync(await roleManager.FindByNameAsync(role));
+        }
 
-//         await roleManager.CreateAsync(new IdentityRole(role));
-//         string email = role.ToLower() + "@gmail.com";
-//         string password = "P@ssw0rd";
+        await roleManager.CreateAsync(new IdentityRole(role));
+        string email = role.ToLower() + "@gmail.com";
+        string password = "P@ssw0rd";
 
-//         if (await usermanager.FindByEmailAsync(email) == null)
-//         {
-//             var user = new IdentityUser
-//             {
-//                 UserName = email,
-//                 Email = email,
-//                 EmailConfirmed = true
-//             };
-//             await usermanager.CreateAsync(user, password);
-//             await usermanager.AddToRoleAsync(user, role);
-//         }
+        if (await usermanager.FindByEmailAsync(email) == null)
+        {
+            var user = new IdentityUser
+            {
+                UserName = email,
+                Email = email,
+                EmailConfirmed = true
+            };
+            await usermanager.CreateAsync(user, password);
+            await usermanager.AddToRoleAsync(user, role);
+        }
 
-//     }
-
+    }
+}
 // //Seed data into chevillard table
 // var chevillard = scope.ServiceProvider.GetRequiredService<IUnitOfWork>().Chevillards;
 // Client acheteurIntestin = new Client

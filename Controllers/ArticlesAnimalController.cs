@@ -4,7 +4,7 @@ using Abattage_BackEnd.UnitOfWork;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyApp.Namespace
+namespace Abattage_BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
