@@ -353,18 +353,29 @@ namespace Abattage_BackEnd.Controllers
 
         [HttpPost("depots")]
 
-        public async Task<IActionResult> AddDepot(Depot depot)
+        public async Task<IActionResult> AddDepot(DepotDTO depot)
         {
-            var newDepot = await _unitOfWork.Depots.AddAsync(depot);
+            var d = new Depot
+            {
+                Adresse = depot.Adresse,
+                Nom = depot.Nom,
+            };
+            var newDepot = await _unitOfWork.Depots.AddAsync(d);
             return Ok(newDepot);
 
         }
 
         [HttpPut("depots")]
 
-        public async Task<IActionResult> UpdateDepot(Depot depot)
+        public async Task<IActionResult> UpdateDepot(DepotDTO depot)
         {
-            var updatedDepot = await _unitOfWork.Depots.UpdateAsync(depot);
+            var d = new Depot
+            {
+                Id = depot.Id ?? 0,
+                Adresse = depot.Adresse,
+                Nom = depot.Nom,
+            };
+            var updatedDepot = await _unitOfWork.Depots.UpdateAsync(d);
             return Ok(updatedDepot);
         }
 
