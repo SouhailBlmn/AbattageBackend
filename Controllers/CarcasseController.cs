@@ -1,9 +1,11 @@
+using Abattage_BackEnd.Data;
 using Abattage_BackEnd.DTO;
 using Abattage_BackEnd.Models;
 using Abattage_BackEnd.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Abattage_BackEnd.Controllers
 {
@@ -14,9 +16,10 @@ namespace Abattage_BackEnd.Controllers
     {
         //Caracasse CRUD
         private readonly IUnitOfWork _unitOfWork;
-
-        public CarcasseController(IUnitOfWork unitOfWork)
+        private readonly AppDbContext _context;
+        public CarcasseController(IUnitOfWork unitOfWork, AppDbContext context)
         {
+            _context = context;
             _unitOfWork = unitOfWork;
         }
 
@@ -33,7 +36,12 @@ namespace Abattage_BackEnd.Controllers
             var carcasse = await _unitOfWork.Carcasses.GetByIdAsync(id, c => c.Stabulation, c => c.Reception, c => c.Status, c => c.TypeBetail, c => c.TypeAbattage);
             return Ok(carcasse);
         }
-
+        [HttpGet("reception/{id}")]
+        public async Task<IActionResult> GetCarcsForRec(int id)
+        {
+            var carcasse = await _context.Carcasses.Where(c => c.ReceptionId == id).AsNoTracking().OrderBy(c => c.Id).ToListAsync();
+            return Ok(carcasse);
+        }
         [HttpPost]
         public async Task<ActionResult<Carcasse>> AddCarcasse(CarcasseDTO carcasse)
         {

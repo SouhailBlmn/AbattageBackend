@@ -1,6 +1,7 @@
 using Abattage_BackEnd.DTO;
 using Abattage_BackEnd.Models;
 using Abattage_BackEnd.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace MyApp.Namespace
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PlanificationController : ControllerBase
     {
 
@@ -21,7 +23,7 @@ namespace MyApp.Namespace
         [HttpGet]
         public async Task<IActionResult> GetPlanifications()
         {
-            var planifications = await _unitOfWork.Planifications.GetAllAsync(p => p.Reception);
+            var planifications = await _unitOfWork.Planifications.GetAllAsync(p => p.Reception, p => p.Reception.Chevillard, p => p.Reception.StabulationBovins, p => p.Reception.StabulationMoutons, p => p.Reception.StabulationVaches, p => p.Reception.AcheteurAutre, p => p.Reception.AcheteurIntestin, p => p.Reception.AcheteurPeau, p => p.Reception.AcheteurTete, p => p.Reception.Chevillard.AcheteurAutre, p => p.Reception.Chevillard.AcheteurIntestin, p => p.Reception.Chevillard.AcheteurPeau, p => p.Reception.Chevillard.AcheteurTete);
             return Ok(planifications);
         }
 

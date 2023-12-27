@@ -1,6 +1,7 @@
 using Abattage_BackEnd.DTO;
 using Abattage_BackEnd.Models;
 using Abattage_BackEnd.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Abattage_BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ConfigController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -150,9 +152,27 @@ namespace Abattage_BackEnd.Controllers
         }
 
         [HttpPost("chevillards")]
-        public async Task<IActionResult> AddChevillard(Chevillard chevillard)
+        public async Task<IActionResult> AddChevillard(ChevillardDTO chevillard)
         {
-            var newChevillard = await _unitOfWork.Chevillards.AddAsync(chevillard);
+
+            var c = new Chevillard
+            {
+                Nom = chevillard.Nom,
+                Plafond = chevillard.Plafond ?? 0,
+                Cin = chevillard.Cin,
+                CinImg = chevillard.CinImg,
+                AcheteurAutreId = chevillard.AcheteurAutreId,
+                AcheteurIntestinId = 1,
+                AcheteurPeauId = chevillard.AcheteurPeauId,
+                AcheteurTeteId = chevillard.AcheteurTeteId,
+                AcheteurIntestniId = 1,
+                Num_carte = chevillard.Num_carte,
+                Infos = chevillard.Infos,
+                Telephone = chevillard.Telephone,
+                Actif = chevillard.Actif
+            };
+
+            var newChevillard = await _unitOfWork.Chevillards.AddAsync(c);
             return Ok(newChevillard);
 
         }
@@ -181,17 +201,28 @@ namespace Abattage_BackEnd.Controllers
         }
 
         [HttpPost("clients")]
-        public async Task<IActionResult> AddClient(Client client)
+        public async Task<IActionResult> AddClient(ClientDTO client)
         {
-            var newClient = await _unitOfWork.Clients.AddAsync(client);
+            var c = new Client
+            {
+                Nom = client.Nom,
+                Plafond = client.Plafond,
+            };
+            var newClient = await _unitOfWork.Clients.AddAsync(c);
             return Ok(newClient);
 
         }
 
         [HttpPut("clients")]
-        public async Task<IActionResult> UpdateClient(Client client)
+        public async Task<IActionResult> UpdateClient(ClientDTO client)
         {
-            var updatedClient = await _unitOfWork.Clients.UpdateAsync(client);
+            var c = new Client
+            {
+                Id = client.Id,
+                Nom = client.Nom,
+                Plafond = client.Plafond,
+            };
+            var updatedClient = await _unitOfWork.Clients.UpdateAsync(c);
             return Ok(updatedClient);
         }
 

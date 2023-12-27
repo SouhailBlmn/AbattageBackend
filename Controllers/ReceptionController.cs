@@ -25,7 +25,7 @@ namespace MyApp.Namespace
 
         public async Task<IActionResult> Get()
         {
-            var result = await _unitOfWork.Receptions.GetAllAsync(r => r.AcheteurPeau, r => r.Chevillard, r => r.AcheteurAutre, r => r.StabulationBovins, r => r.StabulationMoutons, r => r.StabulationVaches, r => r.AcheteurIntestin, r => r.AcheteurTete);
+            var result = await _unitOfWork.Receptions.GetAllAsync(r => r.AcheteurPeau, r => r.Chevillard, r => r.AcheteurAutre, r => r.StabulationBovins, r => r.StabulationMoutons, r => r.StabulationVaches, r => r.AcheteurIntestin, r => r.AcheteurTete, r => r.Chevillard.AcheteurAutre, r => r.Chevillard.AcheteurIntestin, r => r.Chevillard.AcheteurPeau, r => r.Chevillard.AcheteurTete);
             return Ok(result);
         }
 

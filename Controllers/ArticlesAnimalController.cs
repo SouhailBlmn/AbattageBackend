@@ -1,6 +1,7 @@
 using Abattage_BackEnd.DTOa;
 using Abattage_BackEnd.Models;
 using Abattage_BackEnd.UnitOfWork;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Abattage_BackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ArticlesAnimalController : ControllerBase
     {
 

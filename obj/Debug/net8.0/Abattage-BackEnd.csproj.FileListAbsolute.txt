@@ -138,3 +138,4 @@
 /home/canopus/Projects/Abatage/Abattage-BackEnd/obj/Debug/net8.0/Abattage-BackEnd.pdb
 /home/canopus/Projects/Abatage/Abattage-BackEnd/obj/Debug/net8.0/Abattage-BackEnd.genruntimeconfig.cache
 /home/canopus/Projects/Abatage/Abattage-BackEnd/obj/Debug/net8.0/ref/Abattage-BackEnd.dll
+/home/canopus/Projects/Abatage/Abattage-BackEnd/obj/Debug/net8.0/Abattage-BackEnd.sourcelink.json
